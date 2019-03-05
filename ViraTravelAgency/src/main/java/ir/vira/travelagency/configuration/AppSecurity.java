@@ -41,7 +41,7 @@ public class AppSecurity extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/javax.faces.resource/**", "/", "/index", "/login", "/jsf/login.xhtml", "/logout", "/error", "/resetPassword/*").permitAll()
-                .anyRequest().authenticated()
+//                .anyRequest().authenticated()
 //                .antMatchers("**/*.xhtml").denyAll()
 //, "/jsf/login.xhtml"
                 .and()

@@ -168,7 +168,7 @@
         </plugins>
 
         <outputDirectory>src/main/webapp/WEB-INF/classes</outputDirectory>
-        <!--<outputDirectory>target/classes/WEB-INF</outputDirectory>-->
+        <!--<outputDirectory>target/WEB-INF/classes</outputDirectory>-->
 
     </build>
 </project>
