@@ -21,6 +21,7 @@ import javax.faces.webapp.FacesServlet;
 import javax.servlet.DispatcherType;
 import javax.servlet.Servlet;
 import java.util.EnumSet;
+import java.util.regex.Pattern;
 
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -75,6 +76,24 @@ public class AppConfiguration implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(appInterceptor).addPathPatterns("/*").order(0);
+    }
+
+    @Bean
+    public Pattern emailPattern() {
+
+        return Pattern.compile(env.getProperty("regx.email"));
+    }
+
+    @Bean
+    public Pattern passwordPattern() {
+
+        return Pattern.compile(env.getProperty("regx.password"));
+    }
+
+    @Bean
+    public Pattern mobilePattern() {
+
+        return Pattern.compile(env.getProperty("regx.mobile"));
     }
 
     //    @Override

@@ -17,18 +17,18 @@ public class AppInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
 
-        logger.warn(String.format("\npreHandle==> request uri: %s , handler: %s", request.getRequestURI(), handler.getClass().getName()));
+        logger.warn(String.format("preHandle==> request uri: %s , handler: %s", request.getRequestURI(), handler.getClass().getName()));
         return true;
     }
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
-        logger.warn(String.format("\nafterCompletion==> request uri: %s , handler: %s", request.getRequestURI(), handler.getClass().getName()));
+        logger.warn(String.format("afterCompletion==> request uri: %s , handler: %s", request.getRequestURI(), handler.getClass().getName()));
     }
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) {
-        logger.warn(String.format("\npostHandle==> request uri: %s , handler: %s, view: %s", request.getRequestURI(), handler.getClass().getName(), modelAndView.getViewName()));
+        logger.warn(String.format("postHandle==> request uri: %s , handler: %s, view: %s", request.getRequestURI(), handler.getClass().getName(), modelAndView.getViewName()));
     }
 
 }

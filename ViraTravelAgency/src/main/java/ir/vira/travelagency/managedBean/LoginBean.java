@@ -13,10 +13,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
-@SessionScoped
+@RequestScoped
 @ManagedBean
 @Getter
 @Setter
@@ -29,8 +29,6 @@ public class LoginBean extends BaseBean {
 
     private String username;
     private String password;
-
-    private boolean loginStatus;
 
     public LoginBean() {
         logger.warn("Login Bean");

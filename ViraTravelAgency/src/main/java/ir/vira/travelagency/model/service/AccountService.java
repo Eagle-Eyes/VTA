@@ -18,6 +18,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 @Service
 @Transactional
@@ -26,17 +27,33 @@ public class AccountService implements UserDetailsService, CrudService<Account> 
     private static final Logger logger = LoggerFactory.getLogger(AccountService.class);
 
     private AccountRepository accountRepository;
+    private Pattern emailPattern;
+    private Pattern passwordPattern;
+    private Pattern mobilePattern;
 
-    public AccountService(AccountRepository accountRepository) {
+    public AccountService(AccountRepository accountRepository, Pattern emailPattern, Pattern passwordPattern, Pattern mobilePattern) {
         this.accountRepository = accountRepository;
+        this.emailPattern = emailPattern;
+        this.passwordPattern = passwordPattern;
+        this.mobilePattern = mobilePattern;
     }
 
     @Override
-    public UserDetails loadUserByUsername(String accountName) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String loginId) throws UsernameNotFoundException {
 
-        Account account = accountRepository.findByAccountName(accountName);
-//        Account item = accountRepository.findByEmailIgnoreCase(accountName);
-//        Account item = accountRepository.findByMobileNumber(accountName);
+        Account account;
+        if (emailPattern.matcher(loginId).matches()) {
+            logger.warn("Check by email ...");
+            account = accountRepository.findByEmailIgnoreCase(loginId);
+
+        } else if (mobilePattern.matcher(loginId).matches()) {
+            logger.warn("Check by mobile ...");
+            account = accountRepository.findByMobileNumber(loginId);
+
+        } else {
+            logger.warn("Check by account name ...");
+            account = accountRepository.findByAccountName(loginId);
+        }
 
         if (account != null) {
             logger.warn("Account: " + account.getDisplayName());
@@ -52,8 +69,8 @@ public class AccountService implements UserDetailsService, CrudService<Account> 
 
             return userDetails;
         } else {
-            logger.warn(String.format("Account '%s' not found!", accountName));
-            throw new UsernameNotFoundException(String.format("Account '%s' not found!", accountName));
+            logger.warn(String.format("Account '%s' not found!", loginId));
+            throw new UsernameNotFoundException(String.format("Account '%s' not found!", loginId));
         }
     }
 

@@ -2,13 +2,14 @@
 <html
         xmlns:p="http://primefaces.org/ui"
         xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
 >
 
 <h:head>
     <h:outputStylesheet library="primefaces-admin" name="theme.css"/>
     <h:outputStylesheet library="webjars" name="font-awesome/5.7.1/css/fontawesome-jsf.css"/>
 </h:head>
-<h:body>
+<h:body onload="PF('dlg').show();">
 
     <div id="LOGIN_SECTION">
         <p:messages id="LOGIN_MESSAGES" showDetail="true" closable="true">
@@ -16,21 +17,26 @@
         </p:messages>
 
         <div class="ui-g-12 ui-md-4">
-            <h:form id="LOGIN_FORM" prependId="false">
-                <h:panelGrid columns="3" cellpadding="5">
+            <h:form>
 
-                    <p:outputLabel for="LOGIN_ID">Account Name or Email or Phone Number</p:outputLabel>
-                    <p:inputText id="LOGIN_ID" required="true" value="#{loginBean.username}"/>
-                    <p:message for="LOGIN_ID" display="text"/>
+                <p:growl id="growl" sticky="true" showDetail="true" life="3000"/>
 
-                    <p:outputLabel for="LOGIN_PASSWORD">Password</p:outputLabel>
-                    <p:password id="LOGIN_PASSWORD" required="true" value="#{loginBean.password}"/>
-                    <p:message for="LOGIN_PASSWORD"/>
+                <p:dialog header="Login" widgetVar="dlg" resizable="false">
 
-                    <p:commandButton id="LOGIN_BUTTON" value="Sign in" action="#{loginBean.authenticate}"
-                                     update="LOGIN_MESSAGES" styleClass="btn btn-success"/>
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <h:outputLabel for="loginId" value="Account Name or Email or Mobile: "/>
+                        <p:inputText id="loginId" value="#{loginBean.username}" required="true" label="username"/>
 
-                </h:panelGrid>
+                        <h:outputLabel for="password" value="Password: "/>
+                        <p:password id="password" value="#{loginBean.password}" required="true" label="password"/>
+
+                        <f:facet name="footer">
+                            <p:commandButton value="Login" update="growl" action="#{loginBean.authenticate}"/>
+                        </f:facet>
+                    </h:panelGrid>
+
+                </p:dialog>
+
             </h:form>
         </div>
     </div>
