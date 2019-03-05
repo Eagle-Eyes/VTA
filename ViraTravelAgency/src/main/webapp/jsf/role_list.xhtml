@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:p="http://primefaces.org/ui"
+>
+<h:head>
+    <h:outputStylesheet library="primefaces-admin" name="theme.css"/>
+    <h:outputStylesheet library="webjars" name="font-awesome/5.7.1/css/fontawesome-jsf.css"/>
+</h:head>
+<h:body>
+
+    <p:messages id="ITEM_MESSAGES" showDetail="true" closable="true">
+        <p:autoUpdate/>
+    </p:messages>
+
+    <h:form id="ITEM_FORM">
+
+        <h:panelGrid columns="3" cellpadding="5">
+
+            <p:outputLabel for="ITEM_ID" value="ID"/>
+            <p:inputText id="ITEM_ID" disabled="true" value="#{roleCrudBean.item.id}"/>
+            <p:message for="ITEM_ID" display="text"/>
+
+            <p:outputLabel for="ITEM_DISPLAYNAME" value="Display Name"/>
+            <p:inputText id="ITEM_DISPLAYNAME" required="true" value="#{roleCrudBean.item.displayName}"/>
+            <p:message for="ITEM_DISPLAYNAME" display="text"/>
+
+        </h:panelGrid>
+
+        <p:commandButton id="ADD_ITEM" value="Add" action="#{roleCrudBean.add}" update="ITEM_LIST, ITEM_FORM"
+                         styleClass="btn btn-primary"/>
+        <p:commandButton id="APPLY_EDIT_ITEM" value="Apply Editing" action="#{roleCrudBean.edit}"
+                         update="ITEM_LIST, ITEM_FORM" styleClass="btn btn-warning"/>
+
+    </h:form>
+
+    <p:separator title="List"/>
+
+    <p:dataTable id="ITEM_LIST" var="item" value="#{roleCrudBean.items}">
+
+        <p:column headerText="ID">
+            <h:outputText value="#{item.id}"/>
+        </p:column>
+
+        <p:column headerText="Display Name">
+            <h:outputText value="#{item.displayName}"/>
+        </p:column>
+
+        <p:column headerText="Registered Date">
+            <h:outputText value="#{item.registeredDate}"/>
+        </p:column>
+
+        <p:column headerText="Update Date">
+            <h:outputText value="#{item.updatedDate}"/>
+        </p:column>
+
+        <p:column headerText="Action">
+            <h:form id="ACTION_FORM">
+                <p:commandButton id="EDIT_ITEM" value="Edit" action="#{roleCrudBean.load(item.id)}"
+                                 update="ITEM_FORM" rendered="#{item.deleteDate == null}"
+                                 styleClass="btn btn-warning"/>
+
+                <p:commandButton id="REMOVE_ITEM" value="Remove" action="#{roleCrudBean.remove(item.id)}"
+                                 update="ITEM_LIST" rendered="#{item.deleteDate == null}"
+                                 styleClass="btn btn-danger"/>
+            </h:form>
+        </p:column>
+
+    </p:dataTable>
+
+</h:body>
+</html>
