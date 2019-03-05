@@ -1,0 +1,4 @@
+#Ignore list#
+*.class
+.idea/*
+/target/
