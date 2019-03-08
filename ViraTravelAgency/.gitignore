@@ -1,5 +1,5 @@
 #Ignore list#
 *.class
 .idea/*
-/target/
+*/target/*
 *.iml
