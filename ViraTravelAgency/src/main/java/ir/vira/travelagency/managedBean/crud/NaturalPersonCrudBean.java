@@ -1,13 +1,11 @@
-package ir.vira.travelagency.managedBean;
+package ir.vira.travelagency.managedBean.crud;
 
 import ir.vira.travelagency.model.entity.NaturalPerson;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.RequestScoped;
 
-
-//@Transactional
-@ViewScoped
+@RequestScoped
 @ManagedBean
 public class NaturalPersonCrudBean extends BaseCrudBean<NaturalPerson> {
     public NaturalPersonCrudBean() throws IllegalAccessException, InstantiationException {

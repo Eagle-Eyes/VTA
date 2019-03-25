@@ -23,84 +23,84 @@ import java.util.regex.Pattern;
 @Service
 @Transactional
 public class AccountService implements UserDetailsService, CrudService<Account> {
-
+    
     private static final Logger logger = LoggerFactory.getLogger(AccountService.class);
-
+    
     private AccountRepository accountRepository;
     private Pattern emailPattern;
     private Pattern passwordPattern;
     private Pattern mobilePattern;
-
+    
     public AccountService(AccountRepository accountRepository, Pattern emailPattern, Pattern passwordPattern, Pattern mobilePattern) {
         this.accountRepository = accountRepository;
         this.emailPattern = emailPattern;
         this.passwordPattern = passwordPattern;
         this.mobilePattern = mobilePattern;
     }
-
+    
     @Override
     public UserDetails loadUserByUsername(String loginId) throws UsernameNotFoundException {
-
+        
         Account account;
         if (emailPattern.matcher(loginId).matches()) {
             logger.warn("Check by email ...");
             account = accountRepository.findByEmailIgnoreCase(loginId);
-
+            
         } else if (mobilePattern.matcher(loginId).matches()) {
             logger.warn("Check by mobile ...");
             account = accountRepository.findByMobileNumber(loginId);
-
+            
         } else {
             logger.warn("Check by account name ...");
             account = accountRepository.findByAccountName(loginId);
         }
-
+        
         if (account != null) {
             logger.warn("Account: " + account.getDisplayName());
-
+            
             Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-
+            
             for (Role role : account.getRoles()) {
                 logger.warn("Account Role: " + role.getDisplayName());
                 grantedAuthorities.add(new SimpleGrantedAuthority(role.getDisplayName()));
             }
-
+            
             UserDetails userDetails = new User(account.getAccountName(), account.getPassword(), grantedAuthorities);
-
+            
             return userDetails;
         } else {
             logger.warn(String.format("Account '%s' not found!", loginId));
             throw new UsernameNotFoundException(String.format("Account '%s' not found!", loginId));
         }
     }
-
+    
     @Override
     public List<Account> list() {
         return accountRepository.findAllByDeleteDateIsNullOrderByIdDesc();
     }
-
+    
     @Override
     public Account add(Account account) {
         return accountRepository.save(account);
     }
-
+    
     @Override
     public Account edit(Account account) {
         return accountRepository.save(account);
     }
-
+    
     @Override
     public Account get(Long id) {
-
+        
         return accountRepository.getById(id);
-
+        
     }
-
+    
     @Override
     public Account remove(Long id) {
         Account temp = accountRepository.getOne(id);
         temp.setDeleteDate(new Date());
         return accountRepository.save(temp);
     }
-
+    
 }

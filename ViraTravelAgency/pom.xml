@@ -143,6 +143,32 @@
             <groupId>org.webjars</groupId>
             <artifactId>font-awesome</artifactId>
             <version>5.7.1</version>
+        </dependency><!-- https://mvnrepository.com/artifact/org.webjars/bootstrap -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>bootstrap</artifactId>
+            <version>4.2.1</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.webjars/bootstrap-glyphicons -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>bootstrap-glyphicons</artifactId>
+            <version>bdd2cbfba0</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.webjars/jquery -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>jquery</artifactId>
+            <version>3.3.1-1</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.webjars/jquery-ui -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>jquery-ui</artifactId>
+            <version>1.12.1</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/com.github.adminfaces/admin-theme -->
@@ -151,7 +177,6 @@
             <artifactId>admin-theme</artifactId>
             <version>1.0.0-RC21</version>
         </dependency>
-
 
     </dependencies>
 
@@ -166,6 +191,14 @@
                 </configuration>
             </plugin>
         </plugins>
+
+        <!--<finalName>VTA</finalName>-->
+        <!--<resources>-->
+            <!--<resource>-->
+                <!--<filtering>true</filtering>-->
+                <!--<directory>src/main/resources</directory>-->
+            <!--</resource>-->
+        <!--</resources>-->
 
         <outputDirectory>src/main/webapp/WEB-INF/classes</outputDirectory>
         <!--<outputDirectory>target/WEB-INF/classes</outputDirectory>-->

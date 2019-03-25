@@ -4,6 +4,8 @@
         xmlns:p="http://primefaces.org/ui"
 >
 <h:head>
+    <!--<h:outputStylesheet library="webjars" name="bootstrap/4.2.1/css/bootstrap.min-jsf.css"/>-->
+    <!--<h:outputStylesheet library="webjars" name="bootstrap-glyphicons/bdd2cbfba0/css/bootstrap-glyphicons.css"/>-->
     <h:outputStylesheet library="primefaces-admin" name="theme.css"/>
     <h:outputStylesheet library="webjars" name="font-awesome/5.7.1/css/fontawesome-jsf.css"/>
 </h:head>
@@ -13,9 +15,17 @@
         <p:autoUpdate/>
     </p:messages>
 
-    <h:form id="ITEM_FORM">
+    <h:form id="ITEM_FORM" enctype="multipart/form-data">
 
         <h:panelGrid columns="3" cellpadding="5">
+
+            <p:outputLabel for="ITEM_AVATAR" value="Avatar"/>
+            <p:fileUpload id="ITEM_AVATAR" mode="advanced"
+                          fileUploadListener="#{fileUploadHandlerBean.uploadFile}"
+                          dragDropSupport="true" sizeLimit="100000"
+                          allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+                          update=""/>
+            <p:message for="ITEM_AVATAR" display="text"/>
 
             <p:outputLabel for="ITEM_ID" value="ID"/>
             <p:inputText id="ITEM_ID" disabled="true" value="#{accountCrudBean.item.id}"/>
@@ -53,6 +63,11 @@
     <p:separator title="List"/>
 
     <p:dataTable id="ITEM_LIST" var="item" value="#{accountCrudBean.items}">
+
+        <p:column headerText="Avatar">
+            <p:graphicImage value="#{accountCrudBean.streamImage(item.avatar.data, item.avatar.id)}"
+                            rendered="#{not empty item.avatar}"/>
+        </p:column>
 
         <p:column headerText="ID">
             <h:outputText value="#{item.id}"/>

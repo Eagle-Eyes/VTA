@@ -17,46 +17,46 @@ import java.util.UUID;
 @Getter
 @Setter
 public class MindMapView extends BaseBean {
-
+    
     private static final Logger logger = LoggerFactory.getLogger(MindMapView.class);
-
+    
     private MindmapNode root;
-
+    
     private MindmapNode selectedNode;
-
+    
     public MindMapView() {
         logger.warn("MindMapView Bean");
-
+        
         root = new DefaultMindmapNode("google.com", "Google WebSite", "FFCC00", false);
-
+        
         MindmapNode ips = new DefaultMindmapNode("IPs", "IP Numbers", "6e9ebf", true);
         MindmapNode ns = new DefaultMindmapNode("NS(s)", "Namespaces", "6e9ebf", true);
         MindmapNode malware = new DefaultMindmapNode("Malware", "Malicious Software", "6e9ebf", true);
-
+        
         root.addNode(ips);
         root.addNode(ns);
         root.addNode(malware);
     }
-
+    
     public MindmapNode getRoot() {
         return root;
     }
-
+    
     public MindmapNode getSelectedNode() {
         return selectedNode;
     }
-
+    
     public void setSelectedNode(MindmapNode selectedNode) {
         this.selectedNode = selectedNode;
     }
-
+    
     public void onNodeSelect(SelectEvent event) {
         MindmapNode node = (MindmapNode) event.getObject();
-
+        
         //populate if not already loaded
         if (node.getChildren().isEmpty()) {
             Object label = node.getLabel();
-
+            
             if (label.equals("NS(s)")) {
                 for (int i = 0; i < 25; i++) {
                     node.addNode(new DefaultMindmapNode("ns" + i + ".google.com", "Namespace " + i + " of Google", "82c542", false));
@@ -73,7 +73,7 @@ public class MindMapView extends BaseBean {
             }
         }
     }
-
+    
     public void onNodeDblselect(SelectEvent event) {
         this.selectedNode = (MindmapNode) event.getObject();
     }

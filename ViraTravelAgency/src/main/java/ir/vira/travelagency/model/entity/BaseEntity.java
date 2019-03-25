@@ -13,7 +13,7 @@ import java.util.Date;
 @Getter
 @Setter
 public abstract class BaseEntity {
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
@@ -24,28 +24,28 @@ public abstract class BaseEntity {
     protected Date updatedDate;
     @Temporal(TemporalType.TIMESTAMP)
     protected Date deleteDate;
-
-
+    
+    
     public BaseEntity() {
     }
-
+    
     public BaseEntity(String displayName) {
         this.displayName = displayName;
     }
-
+    
     @Override
     public boolean equals(Object obj) {
-
+        
         if (obj != null
-                && this.getClass() == obj.getClass()
-                && this.getId() == ((BaseEntity) obj).getId()
+                    && this.getClass() == obj.getClass()
+                    && this.getId() == ((BaseEntity) obj).getId()
         ) {
             return true;
         } else {
             return false;
         }
     }
-
+    
     @Override
     public int hashCode() {
         return (int) ((17 * 31) + id);

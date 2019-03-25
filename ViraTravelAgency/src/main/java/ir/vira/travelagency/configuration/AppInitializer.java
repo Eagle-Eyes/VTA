@@ -22,15 +22,15 @@ import java.util.Set;
 
 @Component
 public class AppInitializer implements InitializingBean, DisposableBean {//, WebApplicationInitializer {
-
+    
     private static final Logger logger = LoggerFactory.getLogger(AppInitializer.class);
-
+    
     private Environment env;
     private TransactionTemplate transactionTemplate;
     private RoleRepository roleRepository;
     private AccountRepository accountRepository;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
-
+    
     public AppInitializer(Environment env, TransactionTemplate transactionTemplate, RoleRepository roleRepository, AccountRepository accountRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.env = env;
         this.transactionTemplate = transactionTemplate;
@@ -38,10 +38,10 @@ public class AppInitializer implements InitializingBean, DisposableBean {//, Web
         this.accountRepository = accountRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
-
+    
     @Override
     public void afterPropertiesSet() {
-
+        
         transactionTemplate.execute(new TransactionCallbackWithoutResult() {
             @Override
             protected void doInTransactionWithoutResult(TransactionStatus transactionStatus) {
@@ -49,9 +49,9 @@ public class AppInitializer implements InitializingBean, DisposableBean {//, Web
                 initializeSystemAccount();
             }
         });
-
+        
     }
-
+    
     private void updateApplicationRoles() {
         logger.trace("update app roleEnums ...");
         Set<RoleEnum> roleEnums = new HashSet(Arrays.asList(RoleEnum.values()));
@@ -64,24 +64,24 @@ public class AppInitializer implements InitializingBean, DisposableBean {//, Web
             }
         }
     }
-
+    
     private void initializeSystemAccount() {
-
+        
         String appName = env.getProperty("spring.application.name");
         String appDomainName = env.getProperty("spring.application.domain");
-
+        
         Set<RoleEnum> roleEnums = new HashSet(Arrays.asList(RoleEnum.values()));
-
+        
         for (RoleEnum roleEnum : roleEnums) {
-
+            
             Role role = roleRepository.findByDisplayNameIgnoreCase(roleEnum.name());
-
+            
             if (!accountRepository.existsByAccountNameIgnoreCase(role.getDisplayName())) {
-
+                
                 String adminDisplayName = String.format("%s [%s]", role.getDisplayName(), appName.toUpperCase());
                 String accountName = role.getDisplayName().replace(" ", "_");
                 String email = role.getDisplayName().replace(" ", "_").concat("@").concat(appDomainName);
-
+                
                 Account account = new Account();
                 account.setAccountName(accountName);
                 account.setEmail(email);
@@ -89,17 +89,17 @@ public class AppInitializer implements InitializingBean, DisposableBean {//, Web
                 account.setPassword(bCryptPasswordEncoder.encode(role.getDisplayName()));
                 account.setRoles(new HashSet<>());
                 account.getRoles().add(role);
-
+                
                 accountRepository.save(account);
                 logger.trace(String.format("Account '%s' was added.", account.getDisplayName()));
-
+                
             }
         }
     }
-
+    
     @Override
     public void destroy() throws Exception {
-
+    
     }
 
 //    @Override

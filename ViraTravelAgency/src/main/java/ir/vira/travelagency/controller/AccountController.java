@@ -13,26 +13,26 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class AccountController {
     private static final Logger logger = LoggerFactory.getLogger(AccountController.class);
-
+    
     @Autowired
     private AccountRepository accountRepository;
-
+    
     @GetMapping({"/account", "/account/list"})
     public String list() {
         logger.warn("AccountController");
-
+        
         return "/jsf/account_list.xhtml";
     }
-
+    
     @GetMapping({"/resetPassword/{accountName}"})
     public String restPassword(@PathVariable String accountName, @RequestParam String newPassword) {
-
+        
         Account acc = accountRepository.findByAccountName(accountName);
         acc.setPassword(newPassword);
         accountRepository.save(acc);
-
+        
         return "/jsf/account_list.xhtml";
     }
-
-
+    
+    
 }

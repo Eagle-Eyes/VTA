@@ -16,23 +16,23 @@ import java.util.Map;
 @Getter
 @Setter
 public class RequestBean extends BaseBean {
-
+    
     private static final Logger logger = LoggerFactory.getLogger(RequestBean.class);
-
+    
     private Map<String, String> requestParams;
-
+    
     private HttpServletRequest request;
-
+    
     public RequestBean(HttpServletRequest request) {
         this.request = request;
-
+        
         logger.warn("Request Bean");
-
+        
         requestParams = new HashMap<>();
         while (request.getParameterNames().hasMoreElements()) {
             String s = request.getParameterNames().nextElement();
             requestParams.put(s, request.getParameter(s));
         }
     }
-
+    
 }

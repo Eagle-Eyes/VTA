@@ -15,18 +15,18 @@ import javax.faces.view.ViewScoped;
 @Getter
 @Setter
 public class ErrorBean extends BaseBean {
-
+    
     private static final Logger logger = LoggerFactory.getLogger(ErrorBean.class);
-
+    
     public ErrorBean() {
         logger.warn("Error Bean");
-
+        
     }
-
+    
     public void init() {
         logger.warn("Error Bean init");
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Contact admin."));
-
+        
     }
-
+    
 }

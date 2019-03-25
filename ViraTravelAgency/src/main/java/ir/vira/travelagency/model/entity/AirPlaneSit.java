@@ -12,14 +12,14 @@ import java.util.Set;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class AirPlaneSit extends BaseEntity {
-
+    
     private String sitRow;
     private String sitColumn;
-
+    
     @ManyToOne
     private AirPlane airPlane;
-
+    
     @OneToMany(mappedBy = "airPlaneSit")
     private Set<Ticket> tickets;
-
+    
 }

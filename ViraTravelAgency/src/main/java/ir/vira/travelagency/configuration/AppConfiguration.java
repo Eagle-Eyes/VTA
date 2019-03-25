@@ -29,29 +29,29 @@ import java.util.regex.Pattern;
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = {"ir.vira.travelagency.model"})
 public class AppConfiguration implements WebMvcConfigurer {
-
+    
     private static final Logger logger = LoggerFactory.getLogger(AppConfiguration.class);
-
+    
     @Autowired
     private AppInterceptor appInterceptor;
     @Autowired
     private Environment env;
-
+    
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
+    
     @Bean
     public Servlet facesServlet() {
         return new FacesServlet();
     }
-
+    
     @Bean
     public ServletRegistrationBean servletRegistrationBean() {
         return new ServletRegistrationBean(facesServlet(), "*.xhtml");
     }
-
+    
     @Bean
     public FilterRegistrationBean rewriteFilter() {
         FilterRegistrationBean rwFilter = new FilterRegistrationBean(new RewriteFilter());
@@ -65,37 +65,40 @@ public class AppConfiguration implements WebMvcConfigurer {
         rwFilter.addUrlPatterns("*.xhtml");
         return rwFilter;
     }
-
+    
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
+//        registry.addViewController("/naturalPerson").setViewName("/jsf/natural_person.xhtml");
 //        registry.addViewController("/naturalPerson/list").setViewName("/jsf/natural_person.xhtml");
+        registry.addViewController("/document").setViewName("/jsf/document_list.xhtml");
+        registry.addViewController("/document/list").setViewName("/jsf/document_list.xhtml");
         registry.addViewController("/login").setViewName("/jsf/login.xhtml");
         registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
     }
-
+    
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(appInterceptor).addPathPatterns("/*").order(0);
     }
-
+    
     @Bean
     public Pattern emailPattern() {
-
+        
         return Pattern.compile(env.getProperty("regx.email"));
     }
-
+    
     @Bean
     public Pattern passwordPattern() {
-
+        
         return Pattern.compile(env.getProperty("regx.password"));
     }
-
+    
     @Bean
     public Pattern mobilePattern() {
-
+        
         return Pattern.compile(env.getProperty("regx.mobile"));
     }
-
+    
     //    @Override
 //    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
 //        configurer.enable();

@@ -14,14 +14,14 @@ import javax.persistence.ManyToOne;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Location extends BaseEntity {
-
+    
     @ManyToOne
     private Location parent;
-
+    
     private String name;
-
-    private String latutude;
-
+    
+    private String latitude;
+    
     private String longitude;
-
+    
 }

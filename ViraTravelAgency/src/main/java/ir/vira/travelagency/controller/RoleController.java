@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class RoleController {
     private static final Logger logger = LoggerFactory.getLogger(RoleController.class);
-
+    
     @GetMapping({"/role", "/role/list"})
     public String list() {
         logger.warn("RoleController");
-
+        
         return "/jsf/role_list.xhtml";
     }
-
+    
 }

@@ -16,16 +16,16 @@ import java.io.IOException;
 
 @Component
 public class AuthenticationHandler implements AuthenticationSuccessHandler, AuthenticationFailureHandler {
-
+    
     private static final Logger logger = LoggerFactory.getLogger(AuthenticationHandler.class);
-
-
+    
+    
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
         logger.warn("onAuthenticationFailure");
         response.getWriter().print("F");
     }
-
+    
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         logger.warn("onAuthenticationSuccess");

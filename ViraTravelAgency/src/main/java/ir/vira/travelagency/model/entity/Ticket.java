@@ -14,14 +14,14 @@ import javax.persistence.ManyToOne;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Ticket extends BaseEntity {
-
+    
     @ManyToOne
     private Trip trip;
-
+    
     @ManyToOne
     private NaturalPerson passenger;
-
+    
     @ManyToOne
     private AirPlaneSit airPlaneSit;
-
+    
 }

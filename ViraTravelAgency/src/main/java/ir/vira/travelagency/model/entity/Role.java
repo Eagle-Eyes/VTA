@@ -14,14 +14,14 @@ import java.util.Set;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Role extends BaseEntity {
-
+    
     @ManyToMany(mappedBy = "roles")
     private Set<Account> accounts;
-
+    
     public Role(String displayName) {
         super(displayName);
     }
-
+    
     public Role() {
     }
 }
