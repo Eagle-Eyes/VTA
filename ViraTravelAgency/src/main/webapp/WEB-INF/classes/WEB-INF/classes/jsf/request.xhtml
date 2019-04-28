@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:p="http://primefaces.org/ui"
+>
+<h:head>
+    <h:outputStylesheet library="primefaces-admin" name="theme.css"/>
+    <h:outputStylesheet library="webjars" name="font-awesome/5.7.1/css/fontawesome-jsf.css"/>
+</h:head>
+<h:body>
+
+    <p:dataTable var="param" value="#{requestBean.requestParams}">
+
+        <p:column headerText="Name">
+            <h:outputText value="#{param.key}"/>
+        </p:column>
+
+        <p:column headerText="Value">
+            <h:outputText value="#{param.value}"/>
+        </p:column>
+
+    </p:dataTable>
+
+</h:body>
+</html>

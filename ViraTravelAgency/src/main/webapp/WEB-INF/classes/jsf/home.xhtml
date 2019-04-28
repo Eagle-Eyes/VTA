@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html
+        xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets"
+>
+<h:head>
+    <h:outputStylesheet library="primefaces-admin" name="theme.css"/>
+    <h:outputStylesheet library="webjars" name="font-awesome/5.7.1/css/fontawesome-jsf.css"/>
+    <title>Home</title>
+
+    <style>
+
+        * {
+            text-align: center !important;
+        }
+
+        .R {
+            background: red;
+        }
+
+        .B {
+            background: blue;
+        }
+
+        .G {
+            background: green;
+        }
+
+        .BL {
+            background: black;
+        }
+
+        .Y {
+            background: yellow;
+        }
+    </style>
+
+</h:head>
+<h:body>
+
+    <div class="row BL">
+
+        <div class="col-md-12 R">
+            TOP Navbar
+        </div>
+
+    </div>
+    <div class="row">
+
+        <div class="col-md-2 G">
+            Left Side Bar Menu
+            <ui:include src="ui_modules/sidebar_menu.xhtml"/>
+        </div>
+
+        <div class="col-md-8 Y">
+            Content
+        </div>
+
+        <div class="col-md-2 G">
+            Right Side Bar Menu
+        </div>
+
+    </div>
+
+
+</h:body>
+</html>

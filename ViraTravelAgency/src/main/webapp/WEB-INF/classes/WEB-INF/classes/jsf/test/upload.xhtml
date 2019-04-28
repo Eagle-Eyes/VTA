@@ -1,0 +1,12 @@
+<h:form enctype="multipart/form-data" xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:p="http://primefaces.org/ui">
+
+    <p:growl id="messages" showDetail="true"/>
+
+    <p:fileUpload value="#{fileUploadView.uploadedFile}" mode="simple" skinSimple="true"/>
+
+    <br/> <br/>
+
+    <p:commandButton value="Submit" ajax="false" action="#{fileUploadView.upload}"/>
+
+</h:form>

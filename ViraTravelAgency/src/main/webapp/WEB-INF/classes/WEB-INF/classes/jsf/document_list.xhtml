@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:p="http://primefaces.org/ui"
+>
+<h:head>
+    <h:outputStylesheet library="primefaces-admin" name="theme.css"/>
+    <h:outputStylesheet library="webjars" name="font-awesome/5.7.1/css/fontawesome-jsf.css"/>
+</h:head>
+<h:body>
+
+    <p:messages id="ITEM_MESSAGES" showDetail="true" closable="true">
+        <p:autoUpdate/>
+    </p:messages>
+
+    <h:form id="ITEM_FORM">
+
+        <h:panelGrid columns="2" cellpadding="5">
+
+            <p:fileUpload id="ITEM_DATA" mode="simple" skinSimple="true" sizeLimit="1000000"
+                          value="#{fileUploadHandlerBean.uploadedFile}"
+            />
+            <p:message for="ITEM_DATA" display="text"/>
+
+            <p:commandButton id="ADD_ITEM" value="Upload" action="#{fileUploadHandlerBean.uploadFile}"
+                             update="ITEM_LIST, ITEM_FORM" ajax="false"
+                             styleClass="btn btn-primary"/>
+
+        </h:panelGrid>
+
+    </h:form>
+
+    <p:separator title="List"/>
+
+    <p:dataTable id="ITEM_LIST" var="item" value="#{documentCrudBean.items}">
+
+        <p:column headerText="ID">
+            <h:outputText value="#{item.id}"/>
+        </p:column>
+
+        <p:column headerText="Document">
+            <p:graphicImage value="#{fileUploadHandlerBean.streamImage(item.data, item.id)}"
+                            rendered="#{not empty item.data}"/>
+        </p:column>
+
+        <p:column headerText="Display Name">
+            <h:outputText value="#{item.displayName}"/>
+        </p:column>
+
+        <p:column headerText="Type">
+            <h:outputText value="#{item.type}"/>
+        </p:column>
+
+        <p:column headerText="Registered Date">
+            <h:outputText value="#{item.registeredDate}"/>
+        </p:column>
+
+        <p:column headerText="Update Date">
+            <h:outputText value="#{item.updatedDate}"/>
+        </p:column>
+
+        <p:column headerText="Action">
+            <h:form id="ACTION_FORM">
+                <p:commandButton id="EDIT_ITEM" value="Edit" action="#{documentCrudBean.load(item.id)}"
+                                 update="ITEM_FORM" rendered="#{item.deleteDate == null}"
+                                 styleClass="btn btn-warning"/>
+
+                <p:commandButton id="REMOVE_ITEM" value="Remove" action="#{documentCrudBean.remove(item.id)}"
+                                 update="ITEM_LIST" rendered="#{item.deleteDate == null}"
+                                 styleClass="btn btn-danger"/>
+            </h:form>
+        </p:column>
+
+    </p:dataTable>
+
+</h:body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:p="http://primefaces.org/ui"
+>
+<h:head>
+    <h:outputStylesheet library="primefaces-admin" name="theme.css"/>
+    <h:outputStylesheet library="webjars" name="font-awesome/5.7.1/css/fontawesome-jsf.css"/>
+</h:head>
+<h:body>
+
+    <p:messages id="ITEM_MESSAGES" showDetail="true" closable="true">
+        <p:autoUpdate/>
+    </p:messages>
+
+    <h:form id="ITEM_FORM">
+
+        <h:panelGrid columns="3" cellpadding="5">
+
+            <p:outputLabel for="ITEM_ID" value="ID"/>
+            <p:inputText id="ITEM_ID" disabled="true" value="#{naturalPersonCrudBean.item.id}"/>
+            <p:message for="ITEM_ID" display="text"/>
+
+            <p:outputLabel for="ITEM_DISPLAYNAME" value="Display Name"/>
+            <p:inputText id="ITEM_DISPLAYNAME" value="#{naturalPersonCrudBean.item.displayName}"/>
+            <p:message for="ITEM_DISPLAYNAME" display="text"/>
+
+            <p:outputLabel for="ITEM_FIRST_NAME" value="First Name"/>
+            <p:inputText id="ITEM_FIRST_NAME" required="true" value="#{naturalPersonCrudBean.item.firstName}"/>
+            <p:message for="ITEM_FIRST_NAME" display="text"/>
+
+            <p:outputLabel for="ITEM_LAST_NAME" value="Last Name"/>
+            <p:inputText id="ITEM_LAST_NAME" required="true" value="#{naturalPersonCrudBean.item.lastName}"/>
+            <p:message for="ITEM_LAST_NAME" display="text"/>
+
+            <p:outputLabel for="ITEM_MOBILE_NUMBER" value="Mobile Number"/>
+            <p:inputText id="ITEM_MOBILE_NUMBER" value="#{naturalPersonCrudBean.item.mobileNumber}"/>
+            <p:message for="ITEM_MOBILE_NUMBER" display="text"/>
+
+        </h:panelGrid>
+
+        <p:commandButton id="ADD_ITEM" value="Add" action="#{naturalPersonCrudBean.add}" update="ITEM_LIST, ITEM_FORM"
+                         styleClass="btn btn-primary"/>
+        <p:commandButton id="APPLY_EDIT_ITEM" value="Apply Editing" action="#{naturalPersonCrudBean.edit}"
+                         update="ITEM_LIST, ITEM_FORM" styleClass="btn btn-warning"/>
+
+    </h:form>
+
+    <p:separator title="List"/>
+
+    <p:dataTable id="ITEM_LIST" var="item" value="#{naturalPersonCrudBean.items}">
+
+        <p:column headerText="ID">
+            <h:outputText value="#{item.id}"/>
+        </p:column>
+
+        <p:column headerText="Display Name">
+            <h:outputText value="#{item.displayName}"/>
+        </p:column>
+
+        <p:column headerText="First Name">
+            <h:outputText value="#{item.firstName}"/>
+        </p:column>
+
+        <p:column headerText="Last Name">
+            <h:outputText value="#{item.lastName}"/>
+        </p:column>
+
+        <p:column headerText="Mobile Number">
+            <h:outputText value="#{item.mobileNumber}"/>
+        </p:column>
+
+        <p:column headerText="Registered Date">
+            <h:outputText value="#{item.registeredDate}"/>
+        </p:column>
+
+        <p:column headerText="Update Date">
+            <h:outputText value="#{item.updatedDate}"/>
+        </p:column>
+
+        <p:column headerText="Action">
+            <h:form id="ACTION_FORM">
+                <p:commandButton id="EDIT_ITEM" value="Edit" action="#{naturalPersonCrudBean.load(item.id)}"
+                                 update="ITEM_FORM" rendered="#{item.deleteDate == null}"
+                                 styleClass="btn btn-warning"/>
+
+                <p:commandButton id="REMOVE_ITEM" value="Remove" action="#{naturalPersonCrudBean.remove(item.id)}"
+                                 update="ITEM_LIST" rendered="#{item.deleteDate == null}"
+                                 styleClass="btn btn-danger"/>
+            </h:form>
+        </p:column>
+
+    </p:dataTable>
+
+</h:body>
+</html>
